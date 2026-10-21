@@ -1,0 +1,15 @@
+name: buffer-check
+on:
+  schedule:
+    - cron: "13 8 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 cloud/buffer_fill.py --check cloud/schedule.json cloud/media.json
+        env:
+          BUFFER_KEY: ${{ secrets.BUFFER_KEY }}
